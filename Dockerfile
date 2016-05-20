@@ -1,12 +1,11 @@
 FROM alpine:edge
 
-RUN apk add -U iptables sudo && rm -rf /var/cache/apk/*
+RUN apk add -U iptables && rm -rf /var/cache/apk/*
 
-RUN echo ALL ALL=NOPASSWD: /run.sh >> /etc/sudoers \
-  && echo 'Defaults  env_keep += "DESTINATIONS TARGET_IP TARGET_PORT"' >> /etc/sudoers
+RUN chmod 4755 /sbin/xtables-multi
 
 ADD run.sh /run.sh
 
-ENTRYPOINT ["sudo", "/run.sh"]
+ENTRYPOINT ["/run.sh"]
 
 USER nobody
