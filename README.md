@@ -12,12 +12,13 @@ environment variables:
 
 #### Forward all outbound traffic to `127.0.0.1:8080`:
 ```
-docker run --cap-add=NET_ADMIN iptables-redirector
+docker run --cap-add=NET_ADMIN --net=host iptables-redirector
 ```
 
 #### Forward all outbound traffic to `10.0.0.1:3128`:
 ```
 docker run --cap-add=NET_ADMIN \
+  --net=host \
   -e TARGET_IP=10.0.0.1 -e TARGET_PORT=3128 \
   iptables-redirector
 ```
@@ -25,6 +26,7 @@ docker run --cap-add=NET_ADMIN \
 #### Forward traffic destined to `bbc.co.uk` to `127.0.0.1:8080`:
 ```
 docker run --cap-add=NET_ADMIN \
+  --net=host
   -e DESTINATIONS=bbc.co.uk \
   iptables-redirector
 ```
@@ -32,6 +34,7 @@ docker run --cap-add=NET_ADMIN \
 #### Forward traffic destined to `bbc.co.uk` & `google.com` to `127.0.0.1:8080`:
 ```
 docker run --cap-add=NET_ADMIN \
+  --net=host \
   -e DESTINATIONS=bbc.co.uk,google.com \
   iptables-redirector
 ```
